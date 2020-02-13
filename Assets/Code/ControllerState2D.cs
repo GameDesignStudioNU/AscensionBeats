@@ -11,7 +11,9 @@ public class ControllerState2D
     public bool IsCollidingAbove { get; set; }
     public bool IsCollidingBelow { get; set; }
     public bool IsGrounded { get { return IsCollidingBelow; } }
+    public bool IsJumping { get; set; }
     public bool IsWallSliding { get; set; } //{ return (IsCollidingRight || IsCollidingLeft) && !IsCollidingBelow; } }
+    public bool IsWallJumping { get; set; }
 
 
     public bool HasCollisions { get { return IsCollidingRight || IsCollidingLeft || IsCollidingAbove || IsCollidingBelow; } }

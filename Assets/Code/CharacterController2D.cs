@@ -58,9 +58,16 @@ public class CharacterController2D : MonoBehaviour
 
     }
 
-    public void LateUpdate()
+    public void FixedUpdate()
     {
         _jumpIn -= Time.deltaTime;
+        if (State.IsJumping && !Input.GetKey(KeyCode.Space) && _velocity.y > 0)
+        {
+            SetForceVertical(Mathf.Lerp(_velocity.y, 0, Time.deltaTime * 15f));
+        }
+
+        if (State.IsWallJumping && _velocity.y < 0)
+            State.IsWallJumping = false;
 
         WallSlideCheck();
         if (!State.IsWallSliding)
@@ -99,6 +106,7 @@ public class CharacterController2D : MonoBehaviour
         {
             AddForce(new Vector2(0, Parameters.JumpMagnitude));
             _jumpIn = Parameters.JumpFrequency;
+            State.IsJumping = true;
         }
         
     }
@@ -107,7 +115,7 @@ public class CharacterController2D : MonoBehaviour
     {
         var jumpDirection = State.IsCollidingLeft ? 1f : -1f;
         AddForce(new Vector2(Parameters.WallJumpMagnitudeHor * jumpDirection, Parameters.WallJumpMagnitudeVert));
-        _jumpIn = Parameters.JumpFrequency;
+        State.IsWallJumping = true;
     }
     
     public void WallSlideCheck()
@@ -115,9 +123,12 @@ public class CharacterController2D : MonoBehaviour
         if (!State.IsGrounded && (State.IsCollidingLeft || State.IsCollidingRight))
         {
             State.IsWallSliding = true;
-            SetForceVertical(Mathf.Lerp(_velocity.y, Parameters.WallSlideSpeed, Time.deltaTime * Parameters.WallSlideAcceleration));
-            var stickVel = State.IsCollidingRight ? .5f : -.5f;
-            AddForce(new Vector2(stickVel, 0));
+            if (_velocity.y < 0)
+                SetForceVertical(Mathf.Lerp(_velocity.y, Parameters.WallSlideSpeed, Time.deltaTime * Parameters.WallSlideAcceleration));
+            else
+                _velocity.y += Parameters.Gravity * Time.deltaTime;
+            //var stickVel = State.IsCollidingRight ? .5f : -.5f;
+            //AddForce(new Vector2(stickVel, 0));
         }
         else
         {
@@ -247,6 +258,7 @@ public class CharacterController2D : MonoBehaviour
             {
                 deltaMovement.y += SkinWidth;
                 State.IsCollidingBelow = true;
+                State.IsJumping = false;
             }
 
             if (rayDistance < SkinWidth + .0001f)
