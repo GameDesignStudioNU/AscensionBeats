@@ -37,13 +37,13 @@ public class Player : MonoBehaviour
     private void HandleInput()
     {
         // Left and right movement
-        if (Input.GetKey(KeyCode.D))
+        if (Input.GetKey(KeyCode.D) && !(_controller.State.IsWallJumping && _controller.Velocity.x < 0))
         {
             _normalizedHorizontalSpeed = 1;
             if (!_isFacingRight)
                 Flip();
         }
-        else if (Input.GetKey(KeyCode.A))
+        else if (Input.GetKey(KeyCode.A) && !(_controller.State.IsWallJumping && _controller.Velocity.x > 0))
         {
             _normalizedHorizontalSpeed = -1;
             if (_isFacingRight)
