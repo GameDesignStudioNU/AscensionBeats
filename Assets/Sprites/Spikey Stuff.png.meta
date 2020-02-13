@@ -1,0 +1,415 @@
+fileFormatVersion: 2
+guid: a0ee5c4fa89699b4ebfb07ef31e335fb
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: -1756541241300394093
+    second: Spikey Stuff_0
+  - first:
+      213: -716848540613128720
+    second: Spikey Stuff_1
+  - first:
+      213: 4215952751730546935
+    second: Spikey Stuff_2
+  - first:
+      213: -3410445294393409401
+    second: Spikey Stuff_3
+  - first:
+      213: 1411647854134778196
+    second: Spikey Stuff_4
+  - first:
+      213: -1372983418707341799
+    second: Spikey Stuff_5
+  - first:
+      213: 5290283605847559472
+    second: Spikey Stuff_6
+  - first:
+      213: -29426861310691006
+    second: Spikey Stuff_7
+  - first:
+      213: -5002333508922921273
+    second: Spikey Stuff_8
+  - first:
+      213: -1277952487653532713
+    second: Spikey Stuff_9
+  - first:
+      213: 4850702745201825849
+    second: Spikey Stuff_10
+  - first:
+      213: -8360077350991162763
+    second: Spikey Stuff_11
+  - first:
+      213: 1887322590288158942
+    second: Spikey Stuff_12
+  externalObjects: {}
+  serializedVersion: 10
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: -1
+    aniso: -1
+    mipBias: -100
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  platformSettings:
+  - serializedVersion: 3
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: Spikey Stuff_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 119
+        width: 42
+        height: 305
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: fa6d67dbf3be88e459b8ea60531c252b
+      internalID: -1756541241300394093
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Spikey Stuff_1
+      rect:
+        serializedVersion: 2
+        x: 57
+        y: 173
+        width: 39
+        height: 252
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e3700006de263d745be204a3b93746fd
+      internalID: -716848540613128720
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Spikey Stuff_2
+      rect:
+        serializedVersion: 2
+        x: 128
+        y: 230
+        width: 175
+        height: 168
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0385a5f5599d02e408e56b2e1dd94a3e
+      internalID: 4215952751730546935
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Spikey Stuff_3
+      rect:
+        serializedVersion: 2
+        x: 393
+        y: 381
+        width: 91
+        height: 40
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1f459d0d0a0b3934081a30464bc3d315
+      internalID: -3410445294393409401
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Spikey Stuff_4
+      rect:
+        serializedVersion: 2
+        x: 548
+        y: 324
+        width: 40
+        height: 91
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2687f2b27fed9cb40b4d32a1d4e6b010
+      internalID: 1411647854134778196
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Spikey Stuff_5
+      rect:
+        serializedVersion: 2
+        x: 329
+        y: 220
+        width: 57
+        height: 147
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d747c730a83c4454a9678fa33ea9667f
+      internalID: -1372983418707341799
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Spikey Stuff_6
+      rect:
+        serializedVersion: 2
+        x: 398
+        y: 282
+        width: 145
+        height: 84
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 474920caab51c9e4f8b2cb12e7cef67c
+      internalID: 5290283605847559472
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Spikey Stuff_7
+      rect:
+        serializedVersion: 2
+        x: 131
+        y: 32
+        width: 182
+        height: 183
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6aacb65bae4f2d44ab50d7a20f164a33
+      internalID: -29426861310691006
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Spikey Stuff_8
+      rect:
+        serializedVersion: 2
+        x: 399
+        y: 185
+        width: 95
+        height: 42
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: de5468674eba03b46bc8603a9ceffb5b
+      internalID: -5002333508922921273
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Spikey Stuff_9
+      rect:
+        serializedVersion: 2
+        x: 559
+        y: 102
+        width: 45
+        height: 94
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a7d15ddc7f74b244ba8f94af0ee35e8c
+      internalID: -1277952487653532713
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Spikey Stuff_10
+      rect:
+        serializedVersion: 2
+        x: 31
+        y: 42
+        width: 102
+        height: 102
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 917c6c3310310c34d8614f3f55690b16
+      internalID: 4850702745201825849
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Spikey Stuff_11
+      rect:
+        serializedVersion: 2
+        x: 332
+        y: 1
+        width: 65
+        height: 160
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e96b1d77ff8665348b103cf4280596ba
+      internalID: -8360077350991162763
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Spikey Stuff_12
+      rect:
+        serializedVersion: 2
+        x: 402
+        y: 68
+        width: 158
+        height: 84
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: dac4fa5d38c90b544ab0bde686644926
+      internalID: 1887322590288158942
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    physicsShape: []
+    bones: []
+    spriteID: 5e97eb03825dee720800000000000000
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+  spritePackingTag: 
+  pSDRemoveMatte: 0
+  pSDShowRemoveMatteOption: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
