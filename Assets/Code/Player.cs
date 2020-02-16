@@ -11,6 +11,7 @@ public class Player : MonoBehaviour
     private bool _isFacingRight;
     private CharacterController2D _controller;
     private float _normalizedHorizontalSpeed;
+    private Animator _animator;
 
     public float MaxSpeed = 8f;
     public float SpeedAccelerationOnGround = 10f;
@@ -24,46 +25,80 @@ public class Player : MonoBehaviour
     {
         _controller = GetComponent<CharacterController2D>();
         _isFacingRight = transform.localScale.x > 0;
+        _animator = GetComponent<Animator>();
     }
 
     public void Update()
     {
-        HandleInput();
+        if (true)//(Time.time % 1 < .01f)
+            //Debug.LogFormat("Jumpkey Press: {0}.   Jump Timer: {1}.   Jump Action: {2}.", _controller.State.JumpButtonPress, _controller.State.JumpButtonTimer, _controller.State.JumpButtonAction);
+            //Debug.LogFormat("Velocity.x > 0: {0}.   Facing right: {1}.", _controller.Velocity.x > 0, _isFacingRight);
+            //Debug.LogFormat("Jump timer: {0}", _controller.State.JumpButtonTimer); 
 
+        HandleInput();
+        Animator();
         var movementFactor = _controller.State.IsGrounded ? SpeedAccelerationOnGround : SpeedAccelerationInAir;
-        _controller.SetForceHorizontal(Mathf.Lerp(_controller.Velocity.x, _normalizedHorizontalSpeed * MaxSpeed, Time.deltaTime * movementFactor));
+        if (!_controller.State.IsDashing)
+            _controller.SetForceHorizontal(Mathf.Lerp(_controller.Velocity.x, _normalizedHorizontalSpeed * MaxSpeed, Time.deltaTime * movementFactor));        
     }
 
     private void HandleInput()
     {
         // Left and right movement
-        if (Input.GetKey(KeyCode.D) && !(_controller.State.IsWallJumping && _controller.Velocity.x < 0))
+        if (_controller.State.RightButtonHold && !_controller.State.IsWallJumping && !_controller.State.IsClinging && !_controller.State.IsDashing)
         {
             _normalizedHorizontalSpeed = 1;
             if (!_isFacingRight)
                 Flip();
         }
-        else if (Input.GetKey(KeyCode.A) && !(_controller.State.IsWallJumping && _controller.Velocity.x > 0))
+        else if (_controller.State.LeftButtonHold && !_controller.State.IsWallJumping && !_controller.State.IsClinging && !_controller.State.IsDashing)
         {
             _normalizedHorizontalSpeed = -1;
             if (_isFacingRight)
                 Flip();
+        }
+        // Wall jumping horizontal movement
+        else if (_controller.State.IsWallJumping)
+        {
+            _normalizedHorizontalSpeed = _controller.lastWallJumpRight ? -1 : 1;
         }
         else
         {
             _normalizedHorizontalSpeed = 0;
         }
 
-        if (_controller.CanJump && Input.GetKeyDown(KeyCode.Space))
+        // Jumping and Wall jumping
+        if (_controller.State.JumpButtonPress && !_controller.CanJump)
+        {
+            _controller.State.JumpButtonTimer = _controller.State.ButtonPressLiveTime;
+        }
+
+        if (_controller.CanJump && _controller.State.JumpButtonAction)
         {
             _controller.Jump();
+            _controller.State.JumpButtonTimer = 0;
         }
-
-        if (_controller.CanWallJump && Input.GetKeyDown(KeyCode.Space))
+        else if (_controller.CanWallJump && _controller.State.JumpButtonAction)
         {
             _controller.WallJump();
+            _controller.State.JumpButtonTimer = 0;
         }
 
+        // Clinging
+        _controller.State.IsClinging = _controller.CanWallJump && _controller.State.ClingButtonHold && !_controller.State.IsWallJumping;
+
+
+        if (_controller.Velocity.x > .01f && !_isFacingRight)
+            Flip();
+        if (_controller.Velocity.x < -.01f && _isFacingRight)
+            Flip();
+
+        // Dashing        
+        if (_controller.State.DashButtonPress && _controller.CanDash)
+        {
+            var _dashFaceRight = _controller.State.IsClinging ? !_isFacingRight : _isFacingRight;
+            _controller.Dash(_dashFaceRight);
+        }
     }
 
     private void Flip()
@@ -72,25 +107,18 @@ public class Player : MonoBehaviour
         _isFacingRight = transform.localScale.x > 0;
     }
 
-//    private void groundcheck()
-//    {
-//        grounded = false;
-//        collider2d collide = physics2d.overlapcircle(new vector2(transform.position.x - .1f, transform.position.y - .8f * player_height), .3f * player_width, _mask);
-//        if (collide)
-//        {
-//            grounded = true;
-//        }
-//    }
+    private void Animator()
+    {
+        _animator.SetBool("IsRunning", _controller.State.IsRunning && !_controller.State.IsDashing);
+        _animator.SetBool("IsJumping", (_controller.State.IsJumping || _controller.State.IsWallJumping) && !_controller.State.IsWallSliding && _controller.Velocity.y > 0);
+        _animator.SetBool("IsFalling", !_controller.State.IsClinging && !_controller.State.IsGrounded && !_controller.State.IsWallSliding && !_controller.State.IsDashing && _controller.Velocity.y < 0);
+        _animator.SetBool("IsClinging", _controller.State.IsClinging);
+        _animator.SetBool("IsWallSliding", _controller.State.IsWallSliding);
+        _animator.SetBool("IsDashing", _controller.State.IsDashing);
+    }
 
-//    private void wallcheck()
-//    {
-//        collider2d collide = physics2d.overlapbox(transform.position, new vector2(1.05f * player_width, .8f * player_height), 0f, _mask);
-//        if (collide)
-//        {
-//            debug.log("this is working");
-//            _rb.velocity = new vector2(0, _rb.velocity.y);
-//        }
-//    }
+
+
 
 //    public void setrespawn(vector2 new_respawn_coords)
 //    {

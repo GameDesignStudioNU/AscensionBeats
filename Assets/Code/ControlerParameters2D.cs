@@ -24,6 +24,10 @@ public class ControllerParameters2D
 
     public float WallSlideAcceleration = 10f;
 
+    public float DashForce = 20f;
+
+    public float DashCooldown = .3f;
+
 
 
 }
