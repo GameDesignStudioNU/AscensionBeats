@@ -6,21 +6,35 @@ public class BarController : MonoBehaviour
 {
     private float t = 0f;
     SpriteRenderer renderer;
-    Color originalColor;
+    Color newColor;
 
     void Awake()
     {
         renderer = this.gameObject.GetComponent<SpriteRenderer>();
-        originalColor = renderer.color;
+    }
+
+    void Start()
+    {
+
     }
 
     // Update is called once per frame
     void Update()
     {
-        renderer.color = Color.Lerp(Color.clear, originalColor, t);
-        if(renderer.color == originalColor) {
-            Destroy(this.gameObject);
+        float alpha = Mathf.Lerp(0.0f, 1.0f, t);
+        newColor = new Color(renderer.color.r, renderer.color.g, renderer.color.b, alpha);
+        renderer.color = newColor;
+        if(alpha == 1.0f) {
+            gameObject.tag = "Obstacle";
+            renderer.color = Color.red;
+            StartCoroutine(Destroy());
         }
         t += Time.deltaTime*1f;
+    }
+
+    IEnumerator Destroy() 
+    {
+        yield return new WaitForSeconds(0.5f);
+        Destroy(this.gameObject);
     }
 }

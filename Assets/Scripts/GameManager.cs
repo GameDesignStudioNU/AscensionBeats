@@ -15,7 +15,6 @@ public class GameManager : MonoBehaviour
     void Awake()
     {
         player = GameObject.FindGameObjectWithTag("Player");
-        DontDestroyOnLoad(this.gameObject);
     }
     void Update()
     {

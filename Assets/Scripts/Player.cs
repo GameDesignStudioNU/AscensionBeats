@@ -119,6 +119,15 @@ public class Player : MonoBehaviour
 
 
 
+    void OnTriggerEnter2D(Collider2D col) 
+    {
+        if(col.gameObject.tag == "Obstacle") {
+            Debug.Log("-20 health");
+        }
+        if(col.gameObject.tag == "Void") {
+            Application.LoadLevel(Application.loadedLevel);
+        }
+    }
 
 //    public void setrespawn(vector2 new_respawn_coords)
 //    {
