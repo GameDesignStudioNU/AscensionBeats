@@ -10,7 +10,8 @@ public class CharacterController2D : MonoBehaviour
     private const float SkinWidth = .02f;
     private const int TotalHorizontalRays = 8;
     private const int TotalVerticalRays = 4;
-    
+    private const float WallInteractWidth = .5f;
+
     // Public parameters
     public LayerMask PlatformMask;
     public ControllerParameters2D DefaultParameters;
@@ -18,8 +19,16 @@ public class CharacterController2D : MonoBehaviour
     public ControllerState2D State { get; private set; }
     public Vector2 Velocity { get { return _velocity; } }
 
-    public bool CanJump {get { return State.IsGrounded; } }
-    public bool CanWallJump { get { return State.IsWallSliding; } }
+    public bool CanJump { get { return State.IsGrounded; } }
+    public bool CanWallJump { get
+        {
+            var boxCastHit = Physics2D.OverlapBox(_transform.position, new Vector2(2f, 1f), 0f, PlatformMask);
+            return (Mathf.Abs(wallTouchCoord - _transform.position.x) < WallInteractWidth && !State.IsGrounded) && boxCastHit;
+        } }
+    public bool CanDash { get
+        {
+            return State.DashButtonCooldown <= 0 && dashCharged;
+        } }
     public bool HandleCollisions { get; set; }
     public ControllerParameters2D Parameters { get { return _overrideParameters ?? DefaultParameters; } }
     public GameObject PlatformStandingOn { get; private set; }
@@ -39,6 +48,12 @@ public class CharacterController2D : MonoBehaviour
     private float
         _verticalDistanceBetweenRays,
         _HorizontalDistanceBetweenRays;
+
+    private float wallTouchCoord;
+    private bool lastWallTouchRight;
+    public bool lastWallJumpRight;
+    private bool dashCharged = true;
+
 
 
     // Methods
@@ -60,20 +75,48 @@ public class CharacterController2D : MonoBehaviour
 
     public void FixedUpdate()
     {
+        // Jumping and WallJumping stuff
         _jumpIn -= Time.deltaTime;
-        if (State.IsJumping && !Input.GetKey(KeyCode.Space) && _velocity.y > 0)
+        
+        if (State.JumpButtonTimer > 0)
+            State.JumpButtonTimer -= Time.fixedDeltaTime;
+        if (State.DashButtonCooldown > 0)
+            State.DashButtonCooldown -= Time.fixedDeltaTime;
+        else if ((State.DashButtonCooldown  <= 0) && !State.IsJumping && !State.IsWallJumping)
         {
-            SetForceVertical(Mathf.Lerp(_velocity.y, 0, Time.deltaTime * 15f));
+            State.IsDashing = false;
+            if (_velocity.y > .05f)
+            {
+                SetForceVertical(Mathf.Lerp(_velocity.y, 0, Time.deltaTime * 10f));
+            }
         }
 
-        if (State.IsWallJumping && _velocity.y < 0)
-            State.IsWallJumping = false;
+        if (State.IsJumping && !State.JumpButtonHold && _velocity.y > 0)
+        {
+            //SetForceVertical(Mathf.Lerp(_velocity.y, 0, Time.deltaTime * 15f));
+        }
+        if (State.IsWallJumping)
+        {
+            if (_velocity.y > 0)
+                SetForceVertical(Mathf.Lerp(_velocity.y, 0, Time.deltaTime * 4f));
+            else
+                State.IsWallJumping = false;
+        }
 
+        // State checks
         WallSlideCheck();
-        if (!State.IsWallSliding)
+        ClingCheck();
+        if (!State.IsWallSliding && !State.IsClinging && !State.IsDashing)
+        {
             _velocity.y += Parameters.Gravity * Time.deltaTime;
+        }
 
-        
+        // Terminal Velocity
+        if (_velocity.y < -30f)
+        {
+            SetForceVertical(Mathf.Lerp(_velocity.y, -30f, Time.deltaTime * 10f));
+        }
+        // Move!
         Move(Velocity * Time.deltaTime);
 
     }
@@ -104,23 +147,30 @@ public class CharacterController2D : MonoBehaviour
         // TODO: Noving platforms
         if (_jumpIn < 0)
         {
-            AddForce(new Vector2(0, Parameters.JumpMagnitude));
+            AddForce(new Vector2(0, Parameters.JumpMagnitude));            
             _jumpIn = Parameters.JumpFrequency;
             State.IsJumping = true;
+            State.IsCollidingBelow = false;
         }
         
     }
 
     public void WallJump()
     {
-        var jumpDirection = State.IsCollidingLeft ? 1f : -1f;
-        AddForce(new Vector2(Parameters.WallJumpMagnitudeHor * jumpDirection, Parameters.WallJumpMagnitudeVert));
+        var jumpDirection = lastWallTouchRight ? -1f : 1f;
+        lastWallJumpRight = lastWallTouchRight;
+        //AddForce(new Vector2(Parameters.WallJumpMagnitudeHor * jumpDirection, Parameters.WallJumpMagnitudeVert));
+        _velocity = new Vector2(0f, 0f);
+        SetForce(new Vector2(0, Parameters.WallJumpMagnitudeVert));
         State.IsWallJumping = true;
     }
     
     public void WallSlideCheck()
     {
-        if (!State.IsGrounded && (State.IsCollidingLeft || State.IsCollidingRight))
+        if (!State.IsGrounded &&
+            (Mathf.Abs(_transform.position.x - wallTouchCoord) < .01f) &&
+            ((lastWallTouchRight && State.RightButtonHold) || (!lastWallTouchRight && State.LeftButtonHold)) &&
+            !State.IsClinging)
         {
             State.IsWallSliding = true;
             if (_velocity.y < 0)
@@ -134,12 +184,61 @@ public class CharacterController2D : MonoBehaviour
         {
             State.IsWallSliding = false;
         }
-
-
     }
 
-    public void Dash()
+    public void ClingCheck()
     {
+        if (State.IsClinging == true)
+        {
+            SetForceVertical(Mathf.Lerp(_velocity.y, 0, Time.deltaTime * 20f));
+            State.IsJumping = false;
+            State.IsWallJumping = false;
+        } 
+    }
+
+    public void Dash(bool _isFacingRight)
+    {
+        float verticalDash = 0f;
+        float horizontalDash = 0f;
+
+        if (!(State.UpButtonHold || State.DownButtonHold || State.RightButtonHold || State.LeftButtonHold))
+        {
+            horizontalDash = _isFacingRight ? 1f : -1f;
+        }
+        else
+        {
+            if (State.UpButtonHold)
+            {
+                verticalDash = 1f;
+            }
+            else if (State.DownButtonHold)
+            {
+                verticalDash = -1f;
+            }
+
+            if (State.RightButtonHold)
+            {
+                horizontalDash = 1f;
+            }
+            else if (State.LeftButtonHold)
+            {
+                horizontalDash = -1f;
+            }
+        }
+        
+        State.IsDashing = true;
+        State.IsJumping = false;
+        State.IsWallJumping = false;
+        State.DashButtonCooldown = Parameters.DashCooldown;
+        dashCharged = false;
+
+        if (horizontalDash != 0 && verticalDash != 0)
+        {
+            horizontalDash /= Mathf.Sqrt(2);
+            verticalDash /= Mathf.Sqrt(2);
+        }
+        SetForce(new Vector2(horizontalDash * Parameters.DashForce, verticalDash * Parameters.DashForce));
+        
 
     }
 
@@ -192,7 +291,6 @@ public class CharacterController2D : MonoBehaviour
             if (!rayCastHit)
                 continue;
 
-            // Debug.LogFormat("Ray {0} did collide.", i);
 
             deltaMovement.x = rayCastHit.point.x - rayVectorPos.x;
             rayDistance = Mathf.Abs(deltaMovement.x);
@@ -201,11 +299,15 @@ public class CharacterController2D : MonoBehaviour
             {
                 deltaMovement.x -= SkinWidth;
                 State.IsCollidingRight = true;
+                lastWallTouchRight = true;
+                wallTouchCoord = _transform.position.x;
             }
             else
             {
                 deltaMovement.x += SkinWidth;
                 State.IsCollidingLeft = true;
+                lastWallTouchRight = false;
+                wallTouchCoord = _transform.position.x;
             }
 
             if (rayDistance < SkinWidth + .0001f)
@@ -259,6 +361,7 @@ public class CharacterController2D : MonoBehaviour
                 deltaMovement.y += SkinWidth;
                 State.IsCollidingBelow = true;
                 State.IsJumping = false;
+                dashCharged = true;
             }
 
             if (rayDistance < SkinWidth + .0001f)
