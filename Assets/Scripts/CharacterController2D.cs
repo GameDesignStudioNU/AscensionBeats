@@ -52,7 +52,7 @@ public class CharacterController2D : MonoBehaviour
     private float wallTouchCoord;
     private bool lastWallTouchRight;
     public bool lastWallJumpRight;
-    private bool dashCharged = true;
+    public bool dashCharged = true;
 
 
 
