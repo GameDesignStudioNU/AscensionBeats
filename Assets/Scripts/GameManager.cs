@@ -18,7 +18,7 @@ public class GameManager : MonoBehaviour
     }
     void Update()
     {
-        CheckBeat();
+        // CheckBeat();
     }
 
     void CheckBeat() {
