@@ -119,8 +119,7 @@ public class Player : MonoBehaviour
 
 
 
-    void OnTriggerEnter2D(Collider2D col) 
-    {
+    void OnTriggerEnter2D(Collider2D col) {
         if(col.gameObject.tag == "Obstacle") {
             Debug.Log("-20 health");
         }
