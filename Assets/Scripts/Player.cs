@@ -118,11 +118,11 @@ public class Player : MonoBehaviour
     }
 
 
-
-    void OnTriggerEnter2D(Collider2D col) 
+    void OnTriggerStay2D(Collider2D col) 
     {
         if(col.gameObject.tag == "Obstacle") {
             Debug.Log("-20 health");
+            //Application.LoadLevel(Application.loadedLevel);
         }
         if(col.gameObject.tag == "Void") {
             Application.LoadLevel(Application.loadedLevel);
