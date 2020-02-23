@@ -33,13 +33,13 @@ public class Player : MonoBehaviour
         if (true)//(Time.time % 1 < .01f)
             //Debug.LogFormat("Jumpkey Press: {0}.   Jump Timer: {1}.   Jump Action: {2}.", _controller.State.JumpButtonPress, _controller.State.JumpButtonTimer, _controller.State.JumpButtonAction);
             //Debug.LogFormat("Velocity.x > 0: {0}.   Facing right: {1}.", _controller.Velocity.x > 0, _isFacingRight);
-            //Debug.LogFormat("Jump timer: {0}", _controller.State.JumpButtonTimer); 
+            //Debug.LogFormat("Jump timer: {0}", _controller.State.JumpButtonTimer);
 
         HandleInput();
         Animator();
         var movementFactor = _controller.State.IsGrounded ? SpeedAccelerationOnGround : SpeedAccelerationInAir;
         if (!_controller.State.IsDashing)
-            _controller.SetForceHorizontal(Mathf.Lerp(_controller.Velocity.x, _normalizedHorizontalSpeed * MaxSpeed, Time.deltaTime * movementFactor));        
+            _controller.SetForceHorizontal(Mathf.Lerp(_controller.Velocity.x, _normalizedHorizontalSpeed * MaxSpeed, Time.deltaTime * movementFactor));
     }
 
     private void HandleInput()
@@ -93,7 +93,7 @@ public class Player : MonoBehaviour
         if (_controller.Velocity.x < -.01f && _isFacingRight)
             Flip();
 
-        // Dashing        
+        // Dashing
         if (_controller.State.DashButtonPress && _controller.CanDash)
         {
             var _dashFaceRight = _controller.State.IsClinging ? !_isFacingRight : _isFacingRight;
@@ -118,7 +118,7 @@ public class Player : MonoBehaviour
     }
 
 
-    void OnTriggerStay2D(Collider2D col) 
+    void OnTriggerStay2D(Collider2D col)
     {
         if(col.gameObject.tag == "Obstacle") {
             Debug.Log("-20 health");
