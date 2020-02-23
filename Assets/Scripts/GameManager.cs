@@ -1,42 +1,40 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
-public class GameManager : MonoBehaviour {
-    private SongData[] allSongData;
-    private SongData currentSongData;
-    private int numSongs;
-    private AudioBeatEventEmitter eventEmitter;
-    public static GameManager instance;
-    void Awake() {
-        if(instance == null)
-            instance = this;
-        else
-        {
-            Destroy(this.gameObject);
+public class GameManager : MonoBehaviour
+{
+    public GameObject vertBar;
+    public GameObject horizBar;
+    private GameObject player;
+    [Range(0,3)]
+    public int[] onNthFullBeat;
+    [Range(0,7)]
+    public int[] onEigthBeat;
+    private int nthFullBeat;
+
+
+    void Awake()
+    {
+        player = GameObject.FindGameObjectWithTag("Player");
+    }
+    void Update()
+    {
+        CheckBeat();
+    }
+
+    void CheckBeat() {
+        nthFullBeat = BPerM.fullBeatCount % 4;
+        for(int i = 0; i < onEigthBeat.Length; i++) {
+            if(BPerM.onEigthBeat && BPerM.EigthBeatCount % 8 == onEigthBeat[i]) {
+                for(int j = 0; j < onNthFullBeat.Length; j++) {
+                    if(nthFullBeat == onNthFullBeat[i]) {
+                        SpawnOnBeat(vertBar);
+                    }
+                }
+            }
         }
     }
-    void Start() {
-        // //initialize dictionary of SongData with the scene name as the key
-        // allSongData = GetComponents<SongData>();
-        // numSongs = allSongData.Length;
 
-        // //get current scene build index
-        // Scene currentScene = SceneManager.GetActiveScene();
-        // sceneIndex = currentScene.buildIndex;
-        // if(sceneIndex < numSongs) {
-        //     currentSongData = allSongData[sceneIndex];
-        // }
-        // else {
-        //     Debug.Warn("There are more scenes than there are songs!");
-        // }
-
-        // //initialize eventEmitter
-        // eventEmitter = GetComponent<AudioBeatEventEmitter>();
-    }
-
-    // Update is called once per frame
-    void Update() {
-        
+    void SpawnOnBeat(GameObject prefab) {
+        Instantiate(prefab, new Vector3(player.transform.position.x + Random.Range(-8f, 8f), player.transform.position.y - 20f, player.transform.position.z), Quaternion.identity);
     }
 }
