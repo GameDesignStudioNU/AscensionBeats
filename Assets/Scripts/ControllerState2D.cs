@@ -7,15 +7,16 @@ using UnityEngine;
 public class ControllerState2D
 {
     public float ButtonPressLiveTime = .1f;
+    private float AxisOverlap = 2f;
 
     // Physical controller bindings
     public bool RightButtonPress { get
         {
-            return Input.GetKeyDown(KeyCode.D) || Input.GetKeyDown(KeyCode.RightArrow);
+            return Input.GetKeyDown(KeyCode.D) || Input.GetKeyDown(KeyCode.RightArrow); 
         } }
     public bool RightButtonHold { get
         {
-            return Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.RightArrow) || Input.GetAxis("Horizontal") > .1f;
+            return Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.RightArrow) || (Input.GetAxis("Horizontal") > .1f) && Mathf.Abs(Input.GetAxis("Vertical")) < AxisOverlap * Mathf.Abs(Input.GetAxis("Horizontal"));
         } }
     public bool LeftButtonPress { get
         {
@@ -23,7 +24,7 @@ public class ControllerState2D
         } }
     public bool LeftButtonHold { get
         {
-            return Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.LeftArrow) || Input.GetAxis("Horizontal") < -.1f;
+            return Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.LeftArrow) || Input.GetAxis("Horizontal") < -.1f && Mathf.Abs(Input.GetAxis("Vertical")) < AxisOverlap * Mathf.Abs(Input.GetAxis("Horizontal"));
         } }
     public bool UpButtonPress { get
         {
@@ -31,7 +32,7 @@ public class ControllerState2D
         } }
     public bool UpButtonHold { get
         {
-            return Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.UpArrow) || Input.GetAxis("Vertical") < -.1f;
+            return Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.UpArrow) || Input.GetAxis("Vertical") < -.1f && Mathf.Abs(Input.GetAxis("Horizontal")) < AxisOverlap * Mathf.Abs(Input.GetAxis("Vertical"));
         } }
     public bool DownButtonPress { get
         {
@@ -40,7 +41,7 @@ public class ControllerState2D
     public bool DownButtonHold
     { get
         {
-            return Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.DownArrow) || Input.GetAxis("Vertical") > .1f;
+            return Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.DownArrow) || Input.GetAxis("Vertical") > .1f && Mathf.Abs(Input.GetAxis("Horizontal")) < AxisOverlap * Mathf.Abs(Input.GetAxis("Vertical"));
         } }
     public float JumpButtonTimer { get; set; }
     public bool JumpButtonAction { get
