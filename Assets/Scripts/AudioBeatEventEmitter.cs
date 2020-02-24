@@ -38,7 +38,7 @@ public class AudioBeatEventEmitter : MonoBehaviour
     {
         startTime += 1000*Time.deltaTime;
         if(index < numTimeStamps && startTime >= timeStamps[index]) {
-            SpawnFallingCircle();
+            // SpawnFallingCircle();
             index++;
         }
     }
@@ -50,15 +50,15 @@ public class AudioBeatEventEmitter : MonoBehaviour
     void SpawnFallingCircle() {
         float spawnX = Random.Range(Camera.main.ScreenToWorldPoint(new Vector2(0, 0)).x, Camera.main.ScreenToWorldPoint(new Vector2(Screen.width, 0)).x);
         float spawnY = (Camera.main.ScreenToWorldPoint(new Vector2(0, Screen.height)).y) - 1;
-        GameObject circle = fallingCirclePool.GetObject();
-        if(circle != null) {
-            circle.transform.position = new Vector3(spawnX, spawnY, 10);
-            circle.SetActive(true);
-        }
+        // GameObject circle = fallingCirclePool.GetObject();
+        // if(circle != null) {
+        //     circle.transform.position = new Vector3(spawnX, spawnY, 10);
+        //     circle.SetActive(true);
+        // }
         // Instantiate(projectilePrefab, new Vector3(spawnX, spawnY, 10), Quaternion.identity);
     }
 
     public void RemoveFallingCircle(GameObject obj) {
-        fallingCirclePool.RemoveObject(obj);
+        // fallingCirclePool.RemoveObject(obj);
     }
 }
