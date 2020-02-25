@@ -30,16 +30,20 @@ public class Player : MonoBehaviour
 
     public void Update()
     {
-        if (true)//(Time.time % 1 < .01f)
-            //Debug.LogFormat("Jumpkey Press: {0}.   Jump Timer: {1}.   Jump Action: {2}.", _controller.State.JumpButtonPress, _controller.State.JumpButtonTimer, _controller.State.JumpButtonAction);
-            //Debug.LogFormat("Velocity.x > 0: {0}.   Facing right: {1}.", _controller.Velocity.x > 0, _isFacingRight);
-            //Debug.LogFormat("Jump timer: {0}", _controller.State.JumpButtonTimer); 
-
         HandleInput();
         Animator();
         var movementFactor = _controller.State.IsGrounded ? SpeedAccelerationOnGround : SpeedAccelerationInAir;
         if (!_controller.State.IsDashing)
-            _controller.SetForceHorizontal(Mathf.Lerp(_controller.Velocity.x, _normalizedHorizontalSpeed * MaxSpeed, Time.deltaTime * movementFactor));        
+            _controller.SetForceHorizontal(Mathf.Lerp(_controller.Velocity.x, _normalizedHorizontalSpeed * MaxSpeed, Time.deltaTime * movementFactor));
+        
+        if ((_controller.CanDash || _controller.State.IsDashing) && GetComponent<ParticleSystem>().isPaused)
+        {
+            GetComponent<ParticleSystem>().Play();
+        } 
+        else
+        {
+            GetComponent<ParticleSystem>().Pause();
+        }
     }
 
     private void HandleInput()
@@ -85,7 +89,7 @@ public class Player : MonoBehaviour
         }
 
         // Clinging
-        _controller.State.IsClinging = _controller.CanWallJump && _controller.State.ClingButtonHold && !_controller.State.IsWallJumping;
+        _controller.State.IsClinging = _controller.CanWallJump && _controller.State.ClingButtonHold && !_controller.State.IsWallJumping && !_controller.State.IsDashing;
 
 
         if (_controller.Velocity.x > .01f && !_isFacingRight)
@@ -112,17 +116,18 @@ public class Player : MonoBehaviour
         _animator.SetBool("IsRunning", _controller.State.IsRunning && !_controller.State.IsDashing);
         _animator.SetBool("IsJumping", (_controller.State.IsJumping || _controller.State.IsWallJumping) && !_controller.State.IsWallSliding && _controller.Velocity.y > 0);
         _animator.SetBool("IsFalling", !_controller.State.IsClinging && !_controller.State.IsGrounded && !_controller.State.IsWallSliding && !_controller.State.IsDashing && _controller.Velocity.y < 0);
-        _animator.SetBool("IsClinging", _controller.State.IsClinging);
+        _animator.SetBool("IsClinging", _controller.State.IsClinging && !_controller.State.IsClimbing);
         _animator.SetBool("IsWallSliding", _controller.State.IsWallSliding);
         _animator.SetBool("IsDashing", _controller.State.IsDashing);
+        _animator.SetBool("IsClimbing", _controller.State.IsClimbing);
     }
 
 
     void OnTriggerStay2D(Collider2D col) 
     {
-        if(col.gameObject.tag == "Obstacle") {
-            Debug.Log("-20 health");
-            //Application.LoadLevel(Application.loadedLevel);
+        if(col.gameObject.tag == "Obstacle" && !_controller.State.IsDashing) {
+            //Debug.Log("-20 health");
+            Application.LoadLevel(Application.loadedLevel);
         }
         if(col.gameObject.tag == "Void") {
             Application.LoadLevel(Application.loadedLevel);
