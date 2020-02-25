@@ -121,29 +121,6 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
---- !u!1 &242663900 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 409179225552358831, guid: da3c3d1e477a15c48ae4bc1e8bd17a9c,
-    type: 3}
-  m_PrefabInstance: {fileID: 409179225379306908}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &242663901
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 242663900}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8c3860414d212334b925fbfc40c583ca, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  healthBar: {fileID: 1644160907}
-  healthFill: {fileID: 1627884436}
-  currentHealth: 100
-  maxHealth: 100
-  healthBarYOffset: 0
 --- !u!1 &472282166
 GameObject:
   m_ObjectHideFlags: 0
@@ -227,7 +204,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &472282170
 MonoBehaviour:
@@ -258,6 +235,7 @@ MonoBehaviour:
   m_RequiresDepthTextureOption: 2
   m_RequiresOpaqueTextureOption: 2
   m_CameraType: 0
+  m_CameraOutput: 0
   m_Cameras: []
   m_RendererIndex: -1
   m_VolumeLayerMask:
@@ -269,7 +247,6 @@ MonoBehaviour:
   m_AntialiasingQuality: 2
   m_StopNaN: 0
   m_Dithering: 0
-  m_ClearDepth: 1
   m_RequiresDepthTexture: 0
   m_RequiresColorTexture: 0
   m_Version: 2
@@ -556,9 +533,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   prefabs:
   - {fileID: 718093378396861864, guid: 4d56b19e198d04f4e8e58e138232a434, type: 3}
+  - {fileID: 9103126927728503700, guid: eed4e783c794a4e7ab432d6dd9d80d7d, type: 3}
   stringTimeStamps:
   - 5050,9678,13700,18469,22856,23474,26071,27048,28747,34338,36776,37956,39814,45302,45853,46530,46879,47395,47556,47927,48271,48805,48969,49299,49630,50176,50340,50652,51011,51502,51681,52069,52390,53078,53396,53778,54291,54457,54795,55127,55630,55805,56172,56525,57031,57200,57598,57912,58418,58565,58931,59268,59754,59939,60290,60654,61126,61312,61689,62020,62513,62701,63084,63445,63920,64077,64456,64822,65276,65442,65832,66169,66646,66833,67203,67562,68018,68229,68588,68935,69419,69627,69961,70317,70849,70998,71355,71677,72177,72366,72719,73100,73589,73730,74123,74477,74967,75125,75489,75859,76312,76479,76858,77233,77734,77888,78315,78565,79060,79229,79611,79947,80443,80611,80996,81364,81870,82050,82384,82744,83231,83399,83770,84105,84592,84788,85153,85511,85978,86139,86521,86881,87383,87542,87906,88229,88709,88880,89279,89636,90124,90311,90669,91007,91493,91675,92030,92358,92903,93071,93403,93742,94256,94427,94762,95131,95680,95838,96189,96514,97026,97205,97545,97907,98390,98566,98925,99286,99808,99956,100330,100687,101204,101347,101708,102035,102557,102730,103055,103412,103953,104126,104439,104784,105294,105456,105820,106176,106680,106837,107182,107572,108062,108198,108590,108949,109438,109578,109967,110328,110842,110994,111366,111720,112228,112376,112738,113103,113631,113782,114134,114479,114963,115129,115492,115856,116367,116515,116871,117243,117729,117879,118253,118623,119162,119330,119652,119997,120503,120665,121007,121550,121696,122038,122427,122715,123237,123399,123797,124126,124641,124797,125172,125518,125989,126202,126509,126901,127391,127562,127914,128256,128757,128913,129280,129645,130133,130312,130715,131135,131556,131695,132038,132387,132870,133028,133415,133778,134214,134419,134787,135136,135664,135807,136157,136528,137025,137219,137580,138149,138911,139283,139781,139952,140357,141032,141661,142223,142703,143346,144410,145388,146481,146835,147518,148212,149271,149644,151311,152004,152393,152805,153735,154756,155104,155487,156891,157581,157950,159258,160322,160697,161719,162683,163085,163480,164159,164842,165855,166196,167133,167558,169307,170378,172048,173041,173425,174802,176182,177592,181267
-  prefabPoolSizes: 50000000
+  - 5050,9678,13700,18469,22856,23474,26071,27048,28747,34338,36776,37956,39814,45302,45853,46530,46879,47395,47556,47927,48271,48805,48969,49299,49630,50176,50340,50652,51011,51502,51681,52069,52390,53078,53396,53778,54291,54457,54795,55127,55630,55805,56172,56525,57031,57200,57598,57912,58418,58565,58931,59268,59754,59939,60290,60654,61126,61312,61689,62020,62513,62701,63084,63445,63920,64077,64456,64822,65276,65442,65832,66169,66646,66833,67203,67562,68018,68229,68588,68935,69419,69627,69961,70317,70849,70998,71355,71677,72177,72366,72719,73100,73589,73730,74123,74477,74967,75125,75489,75859,76312,76479,76858,77233,77734,77888,78315,78565,79060,79229,79611,79947,80443,80611,80996,81364,81870,82050,82384,82744,83231,83399,83770,84105,84592,84788,85153,85511,85978,86139,86521,86881,87383,87542,87906,88229,88709,88880,89279,89636,90124,90311,90669,91007,91493,91675,92030,92358,92903,93071,93403,93742,94256,94427,94762,95131,95680,95838,96189,96514,97026,97205,97545,97907,98390,98566,98925,99286,99808,99956,100330,100687,101204,101347,101708,102035,102557,102730,103055,103412,103953,104126,104439,104784,105294,105456,105820,106176,106680,106837,107182,107572,108062,108198,108590,108949,109438,109578,109967,110328,110842,110994,111366,111720,112228,112376,112738,113103,113631,113782,114134,114479,114963,115129,115492,115856,116367,116515,116871,117243,117729,117879,118253,118623,119162,119330,119652,119997,120503,120665,121007,121550,121696,122038,122427,122715,123237,123399,123797,124126,124641,124797,125172,125518,125989,126202,126509,126901,127391,127562,127914,128256,128757,128913,129280,129645,130133,130312,130715,131135,131556,131695,132038,132387,132870,133028,133415,133778,134214,134419,134787,135136,135664,135807,136157,136528,137025,137219,137580,138149,138911,139283,139781,139952,140357,141032,141661,142223,142703,143346,144410,145388,146481,146835,147518,148212,149271,149644,151311,152004,152393,152805,153735,154756,155104,155487,156891,157581,157950,159258,160322,160697,161719,162683,163085,163480,164159,164842,165855,166196,167133,167558,169307,170378,172048,173041,173425,174802,176182,177592,181267
+  prefabPoolSizes: 5000000050000000
   _prefabPool: []
   _timeStamps: []
   _startTime: 0
@@ -1001,7 +980,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: -14.28, y: 7.32}
+  m_AnchoredPosition: {x: -9.94, y: 6.87}
   m_SizeDelta: {x: 4.42, y: 1.03}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1001 &1666178740
@@ -1014,12 +993,12 @@ PrefabInstance:
     - target: {fileID: 3621041255752820859, guid: 5c7a7084f7888a94ebbb26a67a01d598,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0.3
+      value: -13.37
       objectReference: {fileID: 0}
     - target: {fileID: 3621041255752820859, guid: 5c7a7084f7888a94ebbb26a67a01d598,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: -7.6
+      value: -8.68
       objectReference: {fileID: 0}
     - target: {fileID: 3621041255752820859, guid: 5c7a7084f7888a94ebbb26a67a01d598,
         type: 3}
@@ -1065,6 +1044,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3621041255752820859, guid: 5c7a7084f7888a94ebbb26a67a01d598,
+        type: 3}
+      propertyPath: m_LocalScale.y
+      value: 1.252
+      objectReference: {fileID: 0}
+    - target: {fileID: 3621041255752820859, guid: 5c7a7084f7888a94ebbb26a67a01d598,
+        type: 3}
+      propertyPath: m_LocalScale.x
+      value: 28.24584
       objectReference: {fileID: 0}
     - target: {fileID: 3621041255752820861, guid: 5c7a7084f7888a94ebbb26a67a01d598,
         type: 3}
@@ -1232,7 +1221,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2002098155}
   m_LocalRotation: {x: 0.5, y: 0.5, z: 0.5, w: 0.5}
-  m_LocalPosition: {x: 0, y: 1, z: 40}
+  m_LocalPosition: {x: 3.12, y: 0.3, z: 40}
   m_LocalScale: {x: 5, y: 1, z: 15}
   m_Children: []
   m_Father: {fileID: 0}
@@ -1245,62 +1234,72 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 409179225552358823, guid: da3c3d1e477a15c48ae4bc1e8bd17a9c,
+    - target: {fileID: 3619996447311259215, guid: da3c3d1e477a15c48ae4bc1e8bd17a9c,
+        type: 3}
+      propertyPath: healthBar
+      value: 
+      objectReference: {fileID: 1644160907}
+    - target: {fileID: 3619996447311259215, guid: da3c3d1e477a15c48ae4bc1e8bd17a9c,
+        type: 3}
+      propertyPath: healthFill
+      value: 
+      objectReference: {fileID: 1627884436}
+    - target: {fileID: 7469861097781814852, guid: da3c3d1e477a15c48ae4bc1e8bd17a9c,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 1.41
+      value: 1.91
       objectReference: {fileID: 0}
-    - target: {fileID: 409179225552358823, guid: da3c3d1e477a15c48ae4bc1e8bd17a9c,
+    - target: {fileID: 7469861097781814852, guid: da3c3d1e477a15c48ae4bc1e8bd17a9c,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: -6.23
+      value: -5.07
       objectReference: {fileID: 0}
-    - target: {fileID: 409179225552358823, guid: da3c3d1e477a15c48ae4bc1e8bd17a9c,
+    - target: {fileID: 7469861097781814852, guid: da3c3d1e477a15c48ae4bc1e8bd17a9c,
         type: 3}
       propertyPath: m_LocalPosition.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 409179225552358823, guid: da3c3d1e477a15c48ae4bc1e8bd17a9c,
+    - target: {fileID: 7469861097781814852, guid: da3c3d1e477a15c48ae4bc1e8bd17a9c,
         type: 3}
       propertyPath: m_LocalRotation.x
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 409179225552358823, guid: da3c3d1e477a15c48ae4bc1e8bd17a9c,
+    - target: {fileID: 7469861097781814852, guid: da3c3d1e477a15c48ae4bc1e8bd17a9c,
         type: 3}
       propertyPath: m_LocalRotation.y
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 409179225552358823, guid: da3c3d1e477a15c48ae4bc1e8bd17a9c,
+    - target: {fileID: 7469861097781814852, guid: da3c3d1e477a15c48ae4bc1e8bd17a9c,
         type: 3}
       propertyPath: m_LocalRotation.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 409179225552358823, guid: da3c3d1e477a15c48ae4bc1e8bd17a9c,
+    - target: {fileID: 7469861097781814852, guid: da3c3d1e477a15c48ae4bc1e8bd17a9c,
         type: 3}
       propertyPath: m_LocalRotation.w
       value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 409179225552358823, guid: da3c3d1e477a15c48ae4bc1e8bd17a9c,
+    - target: {fileID: 7469861097781814852, guid: da3c3d1e477a15c48ae4bc1e8bd17a9c,
         type: 3}
       propertyPath: m_RootOrder
-      value: 2
+      value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 409179225552358823, guid: da3c3d1e477a15c48ae4bc1e8bd17a9c,
+    - target: {fileID: 7469861097781814852, guid: da3c3d1e477a15c48ae4bc1e8bd17a9c,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 409179225552358823, guid: da3c3d1e477a15c48ae4bc1e8bd17a9c,
+    - target: {fileID: 7469861097781814852, guid: da3c3d1e477a15c48ae4bc1e8bd17a9c,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 409179225552358823, guid: da3c3d1e477a15c48ae4bc1e8bd17a9c,
+    - target: {fileID: 7469861097781814852, guid: da3c3d1e477a15c48ae4bc1e8bd17a9c,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 409179225552358831, guid: da3c3d1e477a15c48ae4bc1e8bd17a9c,
+    - target: {fileID: 7469861097781814860, guid: da3c3d1e477a15c48ae4bc1e8bd17a9c,
         type: 3}
       propertyPath: m_Name
       value: Player
@@ -1533,5 +1532,5 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

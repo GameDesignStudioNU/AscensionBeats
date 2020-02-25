@@ -123,11 +123,11 @@ public class Player : MonoBehaviour
     }
 
 
-    void OnTriggerStay2D(Collider2D col) 
+    void OnTriggerEnter2D(Collider2D col) 
     {
         if(col.gameObject.tag == "Obstacle" && !_controller.State.IsDashing) {
-            //Debug.Log("-20 health");
-            Application.LoadLevel(Application.loadedLevel);
+            PlayerHealth health = GetComponent<PlayerHealth>();
+            health.ChangeHealth(-20);
         }
         if(col.gameObject.tag == "Void") {
             Application.LoadLevel(Application.loadedLevel);
