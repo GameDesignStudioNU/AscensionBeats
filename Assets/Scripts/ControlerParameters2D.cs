@@ -28,6 +28,8 @@ public class ControllerParameters2D
 
     public float DashCooldown = .3f;
 
+    public float ClimbVelocity = 4f;
+
 
 
 }

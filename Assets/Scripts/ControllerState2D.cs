@@ -89,6 +89,7 @@ public class ControllerState2D
     public bool IsClinging { get; set; }
     public bool IsRunning { get { return IsGrounded && (LeftButtonHold || RightButtonHold); } }
     public bool IsDashing { get; set; }
+    public bool IsClimbing { get; set; }
 
 
     public bool HasCollisions { get { return IsCollidingRight || IsCollidingLeft || IsCollidingAbove || IsCollidingBelow; } }
