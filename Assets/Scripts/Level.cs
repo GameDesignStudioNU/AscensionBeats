@@ -1,43 +1,76 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using UnityEngine;
 
 [RequireComponent(typeof(AudioSource))]
 public class Level : MonoBehaviour
 {
-    public GameObject[] prefabs;
+    public List<ObstacleData> obstacleData;
+    public string name;
+    public string[] jsonFileNames;
     public string[] stringTimeStamps;
     public int[] prefabPoolSizes;
-    private AudioSource audio;
+    private string path;
+    private string jsonString;
+    private int _numPrefabs;
+    private float _time;
+    [SerializeField]private GameObject[] donuts;
+    [SerializeField]private AudioSource audio;
     [SerializeField]private ObjectPool[] _prefabPool;
-    [SerializeField]private TimeStamp[] _timeStamps;
-    [SerializeField]private float _startTime;
-    [SerializeField]private int _numPrefabs;
-    [SerializeField]private int[] _indices;
+    
     void Start()
     {
-        _numPrefabs = prefabs.Length;
-        _indices = new int[_numPrefabs];
+        for(int i = 0; i < 2; i++) {
+            donuts[i].SetActive(false);
+        }
+        
+        for(int i = 0; i < jsonFileNames.Length; i++) {
+            path = Application.streamingAssetsPath + "/" + name + "/" + jsonFileNames[i];
+            jsonString = File.ReadAllText(path);
+            obstacleData.Add(JsonUtility.FromJson<ObstacleData>(jsonString));
+            obstacleData[i].numTimeStamps = obstacleData[i].timeStamps.Length;
+        } 
+
+        _numPrefabs = obstacleData.Count;
         _prefabPool = new ObjectPool[_numPrefabs];
-        _timeStamps = new TimeStamp[_numPrefabs];
-        audio = GetComponent<AudioSource>();
         for(int i = 0; i < _numPrefabs; i++) {
-            _prefabPool[i] = new ObjectPool(prefabPoolSizes[i], prefabs[i]);
-            _timeStamps[i] = new TimeStamp(stringTimeStamps[i]);
-            _indices[i] = 0;
+            if(obstacleData[i].isStatic) break;
+            _prefabPool[i] = new ObjectPool(prefabPoolSizes[i], Resources.Load("Prefabs/" + obstacleData[i].name) as GameObject);
         }
 
-        _startTime = Time.time;
+        audio = GetComponent<AudioSource>();
         PlaySong();
+        _time = Time.time;
     }
 
     void Update()
     {
-        _startTime += 1000 * Time.deltaTime;
+        _time += 1000 * Time.deltaTime;
         for(int i = 0; i < _numPrefabs; i++) {
-            if(isBeat(_timeStamps[i].getTimeStamp(_indices[i]))) {
-                _prefabPool[i].CreateObject();
-                _indices[i]++;
+            if(obstacleData[i].currentIndex < obstacleData[i].numTimeStamps && isBeat(obstacleData[i].timeStamps[obstacleData[i].currentIndex])) {
+                if(obstacleData[i].name == "Donut") {
+                    if(obstacleData[i].currentIndex == 0) {
+                        for(int j = 0; j < 2; j++) {
+                            donuts[j].SetActive(true);
+                        }
+                    }
+                    else {
+                        for(int j = 0; j < 2; j++) {
+                            donuts[j].GetComponent<Donut>().OnBeatEvent();
+                        }
+                    }
+                    obstacleData[i].currentIndex++;
+                    if(obstacleData[i].currentIndex == obstacleData[i].numTimeStamps) {
+                        for(int j = 0; j < 2; j++) {
+                            donuts[j].SetActive(false);
+                        }
+                    }
+                }
+                else {
+                    _prefabPool[i].CreateObject();
+                    obstacleData[i].currentIndex++;
+                }
             }
         }
     }
@@ -48,6 +81,6 @@ public class Level : MonoBehaviour
     }
 
     bool isBeat(int timeStamp) {
-        return(timeStamp > 0 && _startTime >= timeStamp);
+        return(timeStamp > 0 && _time >= timeStamp);
     }
 }
