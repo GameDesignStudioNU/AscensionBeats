@@ -29,6 +29,8 @@ public class Player : MonoBehaviour
         _controller = GetComponent<CharacterController2D>();
         _isFacingRight = transform.localScale.x > 0;
         _animator = GetComponentInChildren<Animator>();
+
+        reloading = false;
     }
 
     public void Update()
@@ -147,19 +149,14 @@ public class Player : MonoBehaviour
             else
             {
                 reloading = true;
-                FindObjectOfType<GameManager>().deathCount++;
                 FindObjectOfType<GameManager>().Reload();
-                //SceneManager.LoadSceneAsync(SceneManager.GetActiveScene().name);
             }
 
         }
         if (col.gameObject.tag == "Void" && !Invincible && !reloading)
         {
-            FindObjectOfType<GameManager>().deathCount++;
-            FindObjectOfType<GameManager>().Reload();
-            //SceneManager.LoadSceneAsync(SceneManager.GetActiveScene().name);
-
             reloading = true;
+            FindObjectOfType<GameManager>().Reload();
         }
     }
 

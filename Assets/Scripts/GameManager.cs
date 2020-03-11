@@ -150,12 +150,13 @@ public class GameManager : MonoBehaviour
         {
             gem.respawnTime = 0;
         }
-
         player.transform.position = GameStats.RespawnPlayerPos;
         FindObjectOfType<AudioManager>().audioSource.Stop();
         FindObjectOfType<AudioManager>().audioSource.time = GameStats.RespawnSongTime;
         FindObjectOfType<BPerM>().beatTimer = GameStats.RespawnBeatTimer;
         FindObjectOfType<Player>().reloading = false;
+
+        deathCount++;
     }
 
 }
