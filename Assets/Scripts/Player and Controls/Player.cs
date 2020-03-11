@@ -22,12 +22,10 @@ public class Player : MonoBehaviour
 
     // Respawn point
     private Vector2 respawn_coords;
-    // private bool reloading;
+    public bool reloading;
 
     void Start()
     {
-        // reloading = false;
-
         _controller = GetComponent<CharacterController2D>();
         _isFacingRight = transform.localScale.x > 0;
         _animator = GetComponentInChildren<Animator>();
@@ -140,7 +138,7 @@ public class Player : MonoBehaviour
 
     void OnTriggerStay2D(Collider2D col) 
     {
-        if (col.gameObject.tag == "Obstacle" && !_controller.State.IsDashing && !Invincible) //&& !reloading)
+        if (col.gameObject.tag == "Obstacle" && !_controller.State.IsDashing && !Invincible && !reloading)
         { 
             if (GetComponent<PlayerHealth>().enabled)
             {
@@ -148,20 +146,20 @@ public class Player : MonoBehaviour
             }
             else
             {
-                // reloading = true;
+                reloading = true;
                 FindObjectOfType<GameManager>().deathCount++;
                 FindObjectOfType<GameManager>().Reload();
                 //SceneManager.LoadSceneAsync(SceneManager.GetActiveScene().name);
             }
 
         }
-        if (col.gameObject.tag == "Void" && !Invincible) // && !reloading)
+        if (col.gameObject.tag == "Void" && !Invincible && !reloading)
         {
             FindObjectOfType<GameManager>().deathCount++;
             FindObjectOfType<GameManager>().Reload();
             //SceneManager.LoadSceneAsync(SceneManager.GetActiveScene().name);
 
-            // reloading = true;
+            reloading = true;
         }
     }
 

@@ -155,6 +155,7 @@ public class GameManager : MonoBehaviour
         FindObjectOfType<AudioManager>().audioSource.Stop();
         FindObjectOfType<AudioManager>().audioSource.time = GameStats.RespawnSongTime;
         FindObjectOfType<BPerM>().beatTimer = GameStats.RespawnBeatTimer;
+        FindObjectOfType<Player>().reloading = false;
     }
 
 }
