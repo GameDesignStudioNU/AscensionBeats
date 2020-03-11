@@ -5,7 +5,7 @@ using UnityEngine;
 public class DashGem : MonoBehaviour
 {
     public float respawnTimeSet = 3.5f;
-    private float respawnTime;
+    public float respawnTime;
     
     void Update()
     {
@@ -22,9 +22,9 @@ public class DashGem : MonoBehaviour
 
     private void OnTriggerStay2D(Collider2D collision)
     {
-        if (collision.gameObject.GetComponent<Player>())
+        if (collision.gameObject.GetComponentInParent<Player>())
         {
-            CharacterController2D _controller = collision.gameObject.GetComponent<CharacterController2D>();
+            CharacterController2D _controller = collision.gameObject.GetComponentInParent<CharacterController2D>();
             if (!_controller.dashCharged)
             {
                 _controller.dashCharged = true;

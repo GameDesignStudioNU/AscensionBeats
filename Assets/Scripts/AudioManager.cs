@@ -5,7 +5,7 @@ using UnityEngine;
 [RequireComponent(typeof (AudioSource))]
 public class AudioManager : MonoBehaviour
 {
-    private AudioSource audioSource;
+    public AudioSource audioSource;
     public float scaleFactor = 10f;
     public static float[] samples = new float[512];
     public static float[] freqBands = new float[8];
@@ -67,23 +67,33 @@ public class AudioManager : MonoBehaviour
     }
 
     // Start is called before the first frame update
-    void Start()
+    public void StartSong()
     {
-        audioSource.Play();
+        for (int i = 0; i < 8; i++)
+        {
+            bandBuffer[i] = 0;
+        }
+        if (!audioSource.isPlaying)
+        {
+            audioSource.Play();
+        }
+    }
+
+    public void PauseSong()
+    {
+        if (audioSource.isPlaying)
+        {
+            audioSource.Pause();
+        }
     }
 
     void Update()
     {
-        GetSpectrumAudioData();
-        GetFrequencyBands();
-        BandBuffer();
+        if (audioSource.isPlaying && FindObjectOfType<GameManager>().NOT_PAUSED)
+        {
+            GetSpectrumAudioData();
+            GetFrequencyBands();
+            BandBuffer();
+        }
     }
-
-    // public void Play(string name) 
-    // {
-    //     Song s = Array.Find(songs, song => song.name == name);
-    //     if(s == null)
-    //         return;
-    //     s.source.Play();
-    // }
 }

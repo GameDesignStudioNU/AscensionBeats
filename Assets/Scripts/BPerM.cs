@@ -5,8 +5,8 @@ using UnityEngine;
 public class BPerM : MonoBehaviour
 {
     private static BPerM instance;
-    public float bpm;
-    private float beatInterval, beatTimer, beatIntervalD8, beatTimerD8;
+    public float bpm, beatTimer;
+    public float beatInterval, beatIntervalD8, beatTimerD8;
     public static bool onFullBeat, onEigthBeat;
     public static int fullBeatCount, EigthBeatCount;
 
@@ -30,7 +30,8 @@ public class BPerM : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-         BeatDetection();
+        if (FindObjectOfType<GameManager>().NOT_PAUSED)
+            BeatDetection();
     }
 
     void BeatDetection()
@@ -39,7 +40,8 @@ public class BPerM : MonoBehaviour
         beatInterval = 60/bpm;
         beatTimer += Time.deltaTime;
 
-        if(beatTimer >= beatInterval) {
+        if(beatTimer >= beatInterval)
+        {
             beatTimer -= beatInterval;
             onFullBeat = true;
             fullBeatCount++;
@@ -49,7 +51,8 @@ public class BPerM : MonoBehaviour
         onEigthBeat = false;
         beatIntervalD8 = beatInterval/8;
         beatTimerD8 += Time.deltaTime;
-        if(beatTimerD8 >= beatIntervalD8) {
+        if(beatTimerD8 >= beatIntervalD8)
+        {
             beatTimerD8 -= beatIntervalD8;
             onEigthBeat = true;
             EigthBeatCount++;
