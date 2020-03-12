@@ -7,14 +7,14 @@ public class ObjectPool: MonoBehaviour
 {
     private List<GameObject> _pool;
     private int _size;
+    private GameObject _prefab;
 
     public ObjectPool(int size, GameObject prefab) {
+        _prefab = prefab;
         _pool = new List<GameObject>();
         _size = size;
         for(int i = 0; i < size; i++) {
-            GameObject obj = (GameObject)Instantiate(prefab);
-            obj.SetActive(false);
-            _pool.Add(obj);
+            AddObject();
         }
     }
 
@@ -24,7 +24,24 @@ public class ObjectPool: MonoBehaviour
                 return _pool[i];
             }
         }
-        return null;
+        GameObject obj = AddObject();
+        _size++;
+        Grow();
+        return obj;
+    }
+
+    private void Grow() {
+        for(int i = 0; i < _size; i++) {
+            GameObject obj = AddObject();
+        }
+        _size = 2 * _size;
+    }
+
+    private GameObject AddObject() {
+        GameObject obj = (GameObject)Instantiate(_prefab);
+        obj.SetActive(false);
+        _pool.Add(obj);
+        return obj;
     }
 
     private void RemoveObject(GameObject obj) {
@@ -35,11 +52,12 @@ public class ObjectPool: MonoBehaviour
         }
     }
 
-    public void CreateObject() {
+    public GameObject CreateObject(Vector3 pos = default(Vector3)) {
         GameObject obj = GetObject();
         if(obj != null) {
             HostileEntity e = obj.GetComponent<HostileEntity>();
-            e.Activate();
+            e.Activate(pos);
         }
+        return obj;
     }
 }

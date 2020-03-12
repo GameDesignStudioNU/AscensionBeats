@@ -21,10 +21,12 @@ public class Level : MonoBehaviour
     
     void Start()
     {
+        //Set preset donuts to be inactive
         for(int i = 0; i < 2; i++) {
             donuts[i].SetActive(false);
         }
         
+        //Read and fill the obstacleData list from json data
         for(int i = 0; i < jsonFileNames.Length; i++) {
             path = Application.streamingAssetsPath + "/" + name + "/" + jsonFileNames[i];
             jsonString = File.ReadAllText(path);
@@ -68,7 +70,7 @@ public class Level : MonoBehaviour
                     }
                 }
                 else {
-                    _prefabPool[i].CreateObject();
+                    GameObject obj = _prefabPool[i].CreateObject();
                     obstacleData[i].currentIndex++;
                 }
             }

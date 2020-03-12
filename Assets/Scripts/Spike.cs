@@ -21,9 +21,9 @@ public class Spike : HostileEntity
         }
     }
 
-    public override Vector2 GetStartPosition() {
+    public override void SetStartPosition() {
         float spawnX = Random.Range(Camera.main.ScreenToWorldPoint(new Vector2(0, 0)).x, Camera.main.ScreenToWorldPoint(new Vector2(Screen.width, 0)).x);
         float spawnY = (Camera.main.ScreenToWorldPoint(new Vector2(0,0)).y) + 1f;
-        return new Vector2(spawnX, spawnY);
+        startPos = new Vector2(spawnX, spawnY);
     }
 }
